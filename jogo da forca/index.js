@@ -1,56 +1,101 @@
 const palavras = {Animais: ["Canarinho", "Elefante", "Girafa", "Tigre", "Cachorro", "Gato", "Panda", "Gorila", "Cavalo", "Pirarucu", "Cobra", "Baleia"],
     Frutas: ["Carambola", "Banana", "Laranja", "Morango", "Abacaxi", "Pera", "Uva", "Kiwi", "Melancia", "Manga", "Jabuticaba", "Cereja"],
-    Meses: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-    Jogos: ["Dark Souls", "League of Legends", "Minecraft", "Fortnite", "World of Warcraft", "Overwatch", "Dota", "Valorant", "The Sims", "Among Us", "Rocket League", "Apex Legends"]
+    Meses: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],   
+}
+
+const categorias = ["Animais","Frutas","Meses"]
+
+const area_botoes = document.getElementById("opcoes")
+
+function criar_botoes(){
+    for(let i = 0;i < categorias.length;i++){
+        const novo_botao = document.createElement("button")
+        novo_botao.className = "escolhas"
+        novo_botao.innerText = categorias[i]
+        area_botoes.appendChild(novo_botao)
+    }
+}
+
+var categoria_escolhida
+const middle = document.getElementById("middle")
+
+function pegar_tema(){
+    const botoes = document.querySelectorAll(".escolhas")
+    botoes.forEach((categoria)=>{
+        categoria.addEventListener("click",(pegar)=>{
+            categoria_escolhida = pegar.target.innerText
+            middle.remove()
+            pegar_palavra()
+        })
+    })
+}
+
+var palavra_escolhida
+
+function pegar_palavra(){
+    n = Math.ceil((Math.random() * 12) - 1)
+    if(categoria_escolhida == "Animais"){
+        palavra_escolhida = palavras.Animais[n].toUpperCase()
+    }else if(categoria_escolhida == "Frutas"){
+        palavra_escolhida = palavras.Frutas[n].toUpperCase()
+    }else{
+        palavra_escolhida = palavras.Meses[n].toUpperCase()
+    }
+    console.log(palavra_escolhida)
+    criar_casas_jogo()
+    criar_alfabeto()
+}
+
+const casas_jogo = document.getElementById("casas_jogo")
+
+function criar_casas_jogo(){
+    for(let i = 0; i < palavra_escolhida.length;i++){
+        const casas = document.createElement("div")
+        casas.className = "casas_do_jogo"
+        casas_jogo.appendChild(casas)
+    }
 }
 
 const alfabeto = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+const teclado = document.getElementById("area_teclado")
 
-let middle = document.getElementById("opcoes")
-let pegar_escolha = document.querySelectorAll(".escolhas")
-let tabuleiro_jogo = document.getElementById("middle")
-let area_teclado = document.getElementById("area_teclado")
-let criar_area_teclado = document.createElement("section")
-criar_area_teclado.id = "teclado"
-let cont = 0
+function criar_alfabeto(){
+    for(let i = 0; i < alfabeto.length;i++){
+        const casa_letras = document.createElement("div")
+        casa_letras.innerText = alfabeto[i]
+        teclado.appendChild(casa_letras)
+    }
+}
 
-pegar_escolha.forEach((evt)=>{
-    evt.addEventListener("click",(el)=>{
-        categoria_escolhida = el.target.innerText
-        let pegar_array_jogo = palavras[categoria_escolhida]
-        pegar_palavra_aleatoria = pegar_array_jogo[Math.floor(((Math.random() * 12)))]
-        pegar_palavra_aleatoria = pegar_palavra_aleatoria.toUpperCase()
-
-        middle.remove()
-
-
-        for(let i = 0;i < pegar_palavra_aleatoria.length;i++){
-            let criar_casinhas = document.createElement("div")
-                criar_casinhas.style.width = "100px"
-                criar_casinhas.style.height = "100px"
-                criar_casinhas.style.marginLeft = "2px"
-                criar_casinhas.style.border = "1px solid black"
-        
-        tabuleiro_jogo.appendChild(criar_casinhas)
-        }
-        for(let i = 0; i <26;i++){
-            let criar_teclado = document.createElement("div")
-            criar_teclado.style.width = "50px"
-            criar_teclado.style.height = "50px"
-            criar_teclado.style.border = "1px solid black"
-            criar_teclado.style.marginLeft = "2px"
-            criar_teclado.innerText = alfabeto[i]
-            criar_teclado.addEventListener("click",(evt)=>{
-                    for(let j = 0; j < pegar_palavra_aleatoria.length;j++){
-                        if(pegar_palavra_aleatoria[j].includes(evt.target.innerText)){
-                            tabuleiro_jogo.children[j].innerText = evt.target.innerText
-                            remover_casa_escolhida = alfabeto.indexOf(evt.target.innerText)
-                            document.getElementById("teclado").childNodes[remover_casa_escolhida].removeEventListener
-                        }
-                    }
-            })
-            criar_area_teclado.appendChild(criar_teclado)
-        }
-        area_teclado.appendChild(criar_area_teclado)
+function jogar(){
+    teclas = document.getElementById("area_teclado")
+    teclas.addEventListener("click",(evt)=>{
+        letra = evt.target.innerText
+        verificar_letra(letra)
+        verificar_se_ganhou()
     })
-})
+}
+
+var acertos = 0
+
+function verificar_letra(letra){
+    const casas_palavra = document.getElementById("casas_jogo")
+    for(let i = 0; i < palavra_escolhida.length;i++){
+        if(palavra_escolhida[i] == letra){
+            casas_palavra.childNodes[i + 1].innerText = letra
+            acertos++
+        }
+    }
+}
+
+function verificar_se_ganhou(){
+    if(acertos == palavra_escolhida.length){
+        alert("parabéns")
+    }
+}
+
+criar_botoes()
+
+pegar_tema()
+
+jogar()

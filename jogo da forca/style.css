@@ -1,72 +1,75 @@
 *{
     margin: 0px;
-}
-
-/*topo*/
-#topo h1{
-    margin-bottom: 50px;
+    padding: 0px;
+    box-sizing: border-box;
 }
 
 #topo{
-    display: grid;
-    place-content: center;
-    margin-top: 50px;
-    border-bottom: 1px solid black
+    height: 5vh;
+    width: auto;
+    text-align: center;
 }
-
-/*meio*/
 
 #middle{
-    margin-top: 200px;
-    margin-bottom: 200px;
+    width: auto;
     display: flex;
     justify-content: center;
-} 
-
-#middle h1{
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-#teclado{
-    display: flex;
-    justify-content: center;
-    font-size: 40px;
-    text-align: center;
-}
-
-#middle div{
-    font-size: 40px;
-    text-align: center;
+    align-items: center;
 }
 
 #opcoes{
-    display: grid;
-    place-content: center;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #opcoes button{
-    margin-left: 30px;
-    height: 50px;
-    width: 150px;
+    background-color: transparent;
     border: 1px solid black;
-    border-radius: 10px;
-    color: red;
-}
-
-#opcoes button:hover{
-    background-color: rgb(197, 197, 197);
-    cursor: pointer;
+    padding: 10px;
 }
 
 .escolhas{
-    display: block;
-    margin-bottom: 25px;
+    margin: 15px;
+    border-radius: 5px;
 }
 
-/*fundo*/
+#casas_jogo{
+    display: flex;
+    justify-content: center;
+}
 
-#fundo{
-    margin-top: 100px;
-    border-top: 1px solid black;
+#casas_jogo div{
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-content: center;
+    border: 1px solid black;
+}
+
+.casas_do_jogo{
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+}
+
+#area_teclado{
+    display: flex;
+    justify-content: center;
+}
+
+#area_teclado div{
+    font-size: 30px;
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-content: center;
+    border: 1px solid black;
+}
+
+#separar{
+    height: 10vh;
 }
